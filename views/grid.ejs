@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Employees</h1>
+    <div>
+        <span>
+            <a href="/add" class="btn btn-primary">Add Employees</a>
+        </span>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Designation</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+            <th>Actions</th>
+        </tr>
+        <% if (employees.length > 0){ %>
+            <% for (let employee of employees) { %>
+            <% currentDate = employee.created_date;
+                var today = String(currentDate.getDate()).padStart(2, '0') + '/' + String(currentDate.getMonth() + 1).padStart(2, '0') + '/' + currentDate.getFullYear();
+
+                var updatedDate = (employee.updated_date) ? employee.updated_date : null;
+                var updated = null;
+                if (updatedDate) {
+                    updated = String(updatedDate.getDate()).padStart(2, '0') + '/' + String(updatedDate.getMonth() + 1).padStart(2, '0') + '/' + updatedDate.getFullYear();
+                }
+            %>
+        <tr>
+                    <td><%= employee.id %></td>
+                    <td><%= employee.name %></td>
+                    <td><%= employee.email %></td>
+                    <td><%= employee.designation %></td>
+                    <td><%= today %></td>
+                    <td><%= updated %></td>
+                    <td><a href="/edit/<%= employee.id %>" class="btn btn-success btn-sm">Edit</a>&nbsp;&nbsp;&nbsp;<a href="/delete/<%= employee.id %>" class="btn btn-danger btn-sm">Delete</a></td>
+        </tr>
+            <% } %>
+        <% } else { %>
+            <tr><td colspan="7">No Record Found</td></tr>
+        <% } %>
+    </table>
+</body>
+</html>
